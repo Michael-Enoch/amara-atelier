@@ -25,40 +25,40 @@ export interface Reel {
 export const HOME_MEDIA = {
   hero: {
     src: "https://images.unsplash.com/photo-1549416878-b9ca95e26903",
-    alt: "Elegant bridal gown - Renie O Fashion, Port Harcourt luxury womenswear",
+    alt: "Elegant bridal gown - Amara Atelier, Port Harcourt luxury womenswear",
   },
   bridalFeature: {
     src: "https://images.unsplash.com/photo-1596181243306-e02a1897afb1",
-    alt: "Bride in a wedding gown - Renie O Fashion bridal collection Port Harcourt",
+    alt: "Bride in a wedding gown - Amara Atelier bridal collection Port Harcourt",
   },
   academyTeaser: {
     src: "https://images.unsplash.com/photo-1631253205802-4dcc28e54b3e",
-    alt: "Fashion class in session - Renie O Fashion Academy Port Harcourt",
+    alt: "Fashion class in session - Amara Atelier Academy Port Harcourt",
   },
   instagram: [
     {
       src: "https://images.unsplash.com/photo-1622277430358-f4d134452e2e",
-      alt: "Renie O Fashion bridal inspiration",
+      alt: "Amara Atelier bridal inspiration",
     },
     {
       src: "https://images.unsplash.com/photo-1631002724711-d1ae3cf651b0",
-      alt: "Renie O Fashion evening couture inspiration",
+      alt: "Amara Atelier evening couture inspiration",
     },
     {
       src: "https://images.unsplash.com/photo-1773858439833-487381cf6fd8",
-      alt: "Renie O Fashion ready-to-wear inspiration",
+      alt: "Amara Atelier ready-to-wear inspiration",
     },
     {
       src: "https://images.unsplash.com/photo-1549416878-b9ca95e26903",
-      alt: "Renie O Fashion bridal atelier inspiration",
+      alt: "Amara Atelier bridal atelier inspiration",
     },
     {
       src: "https://images.unsplash.com/photo-1692643364142-8478eeb45a4b",
-      alt: "Renie O Fashion red gown inspiration",
+      alt: "Amara Atelier red gown inspiration",
     },
     {
       src: "https://images.unsplash.com/photo-1773858440890-2100b53e1125",
-      alt: "Renie O Fashion ivory dress inspiration",
+      alt: "Amara Atelier ivory dress inspiration",
     },
   ],
 } as const;
@@ -66,11 +66,11 @@ export const HOME_MEDIA = {
 export const ABOUT_MEDIA = {
   hero: {
     src: "https://images.unsplash.com/photo-1622277430358-f4d134452e2e",
-    alt: "Renie O Fashion - Port Harcourt fashion designer",
+    alt: "Amara Atelier - Port Harcourt fashion designer",
   },
   designer: {
     src: "https://images.unsplash.com/photo-1549416878-b9ca95e26903",
-    alt: "Renie O Fashion bridal atelier",
+    alt: "Amara Atelier bridal atelier",
   },
   lifestyle: [
     {
@@ -100,7 +100,7 @@ export const COLLECTION_PILLARS: readonly CollectionPillar[] = [
     cta: "Book Bridal Consultation",
     image: {
       src: "https://images.unsplash.com/photo-1622277430358-f4d134452e2e",
-      alt: "Bridals collection - Renie O Fashion",
+      alt: "Bridals collection - Amara Atelier",
     },
   },
   {
@@ -110,7 +110,7 @@ export const COLLECTION_PILLARS: readonly CollectionPillar[] = [
     cta: "Request Custom Order",
     image: {
       src: "https://images.unsplash.com/photo-1631002724711-d1ae3cf651b0",
-      alt: "Bespoke collection - Renie O Fashion",
+      alt: "Bespoke collection - Amara Atelier",
     },
   },
   {
@@ -120,7 +120,7 @@ export const COLLECTION_PILLARS: readonly CollectionPillar[] = [
     cta: "Shop the Collection",
     image: {
       src: "https://images.unsplash.com/photo-1773858439833-487381cf6fd8",
-      alt: "Ready-to-Wear collection - Renie O Fashion",
+      alt: "Ready-to-Wear collection - Amara Atelier",
     },
   },
 ] as const;
@@ -129,7 +129,7 @@ export const LOOKBOOK_SLIDES: readonly LookbookSlide[] = [
   {
     image: {
       src: "https://images.unsplash.com/photo-1622277430358-f4d134452e2e",
-      alt: "The Bridal Edit - Renie O Fashion",
+      alt: "The Bridal Edit - Amara Atelier",
     },
     label: "The Bridal Edit",
     sub: "Bridal Collection 2025",
@@ -137,7 +137,7 @@ export const LOOKBOOK_SLIDES: readonly LookbookSlide[] = [
   {
     image: {
       src: "https://images.unsplash.com/photo-1631002724711-d1ae3cf651b0",
-      alt: "Evening Couture - Renie O Fashion",
+      alt: "Evening Couture - Amara Atelier",
     },
     label: "Evening Couture",
     sub: "Bespoke - Made for You",
@@ -145,7 +145,7 @@ export const LOOKBOOK_SLIDES: readonly LookbookSlide[] = [
   {
     image: {
       src: "https://images.unsplash.com/photo-1773858439833-487381cf6fd8",
-      alt: "Port Harcourt Luxe - Renie O Fashion",
+      alt: "Port Harcourt Luxe - Amara Atelier",
     },
     label: "Port Harcourt Luxe",
     sub: "Ready-to-Wear Collection",
@@ -153,7 +153,7 @@ export const LOOKBOOK_SLIDES: readonly LookbookSlide[] = [
   {
     image: {
       src: "https://images.unsplash.com/photo-1549416878-b9ca95e26903",
-      alt: "The Altar Moment - Renie O Fashion",
+      alt: "The Altar Moment - Amara Atelier",
     },
     label: "The Altar Moment",
     sub: "Bridal - Cathedral Series",
@@ -161,7 +161,7 @@ export const LOOKBOOK_SLIDES: readonly LookbookSlide[] = [
   {
     image: {
       src: "https://images.unsplash.com/photo-1692643364142-8478eeb45a4b",
-      alt: "Bold and Sculpted - Renie O Fashion",
+      alt: "Bold and Sculpted - Amara Atelier",
     },
     label: "Bold & Sculpted",
     sub: "Ready-to-Wear 2025",
