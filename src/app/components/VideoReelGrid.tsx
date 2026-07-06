@@ -41,7 +41,7 @@ export function VideoReelGrid() {
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors self-start md:self-auto"
             style={{ fontFamily: "var(--font-body)", letterSpacing: "0.1em" }}
           >
-            <Instagram size={16} /> @renie_o_fashion
+            <Instagram size={16} /> @{BUSINESS.instagram}
           </a>
         </motion.div>
 
