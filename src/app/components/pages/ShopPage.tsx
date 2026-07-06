@@ -28,19 +28,19 @@ const CATEGORY_META: Record<string, { icon: ReactNode; desc: string; cta: string
     icon: <Heart size={16} aria-hidden="true" />,
     desc: "Handcrafted wedding gowns designed for your most important day.",
     cta: "Book Bridal Consultation",
-    ctaHref: BUSINESS.whatsappLink("Hi Renie O Fashion! I'd like to book a bridal consultation."),
+    ctaHref: BUSINESS.whatsappLink("Hi Amara Atelier! I'd like to book a bridal consultation."),
   },
   Bespoke: {
     icon: <Scissors size={16} aria-hidden="true" />,
     desc: "Made-to-measure pieces crafted entirely to your specifications.",
     cta: "Request Custom Order",
-    ctaHref: BUSINESS.whatsappLink("Hi Renie O Fashion! I'd like to request a bespoke order."),
+    ctaHref: BUSINESS.whatsappLink("Hi Amara Atelier! I'd like to request a bespoke order."),
   },
   "Ready-to-Wear": {
     icon: <Sparkles size={16} aria-hidden="true" />,
     desc: "Premium pieces ready to wear — available now for immediate order.",
     cta: "Order on WhatsApp",
-    ctaHref: BUSINESS.whatsappLink("Hi Renie O Fashion! I'd like to order a Ready-to-Wear piece."),
+    ctaHref: BUSINESS.whatsappLink("Hi Amara Atelier! I'd like to order a Ready-to-Wear piece."),
   },
 };
 
@@ -181,7 +181,7 @@ export function ShopPage() {
               style={{ fontFamily: "var(--font-body)", letterSpacing: "0.25em" }}
               className="text-[#C9A96E] text-xs uppercase mb-2"
             >
-              Renie O Fashion · Port Harcourt
+              Amara Atelier · Port Harcourt
             </p>
             <h1
               style={{ fontFamily: "var(--font-display)" }}
@@ -337,11 +337,12 @@ export function ShopPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-6">
-            {catalogPage.items.map((product) => (
+            {catalogPage.items.map((product, index) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 onViewDetails={handleViewDetails}
+                loading={index < 4 ? "eager" : "lazy"}
               />
             ))}
           </div>
@@ -415,7 +416,7 @@ export function ShopPage() {
               Every woman is unique. We create pieces built entirely around you — your measurements, your vision, your occasion.
             </p>
             <a
-              href={BUSINESS.whatsappLink("Hi Renie O Fashion! I'd like to commission a bespoke piece.")}
+              href={BUSINESS.whatsappLink("Hi Amara Atelier! I'd like to commission a bespoke piece.")}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#25D366] text-white text-xs uppercase tracking-widest px-7 py-3.5 hover:bg-[#1ebe57] transition-colors mt-2 min-h-[48px]"
