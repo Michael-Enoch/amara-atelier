@@ -72,7 +72,7 @@ export function Footer() {
                 href={BUSINESS.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow Renie O Fashion on Instagram"
+                aria-label={`Follow ${BUSINESS.name} on Instagram`}
                 className="text-[#7A7570] hover:text-[#C9A96E] transition-colors focus-visible:outline focus-visible:outline-[#C9A96E]"
               >
                 <Instagram size={19} aria-hidden="true" />
@@ -81,7 +81,7 @@ export function Footer() {
                 href={BUSINESS.whatsappBase}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Chat with Renie O Fashion on WhatsApp"
+                aria-label={`Chat with ${BUSINESS.name} on WhatsApp`}
                 className="text-[#7A7570] hover:text-[#C9A96E] transition-colors focus-visible:outline focus-visible:outline-[#C9A96E]"
               >
                 <MessageCircle size={19} aria-hidden="true" />
