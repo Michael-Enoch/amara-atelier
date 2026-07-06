@@ -24,6 +24,10 @@ interface ShopContextValue {
 const ShopContext = createContext<ShopContextValue | null>(null);
 
 const MAX_CART_QUANTITY = 99;
+const CART_STORAGE_KEY = "amara-cart";
+const WISHLIST_STORAGE_KEY = "amara-wishlist";
+const LEGACY_CART_STORAGE_KEY = "renie-cart";
+const LEGACY_WISHLIST_STORAGE_KEY = "renie-wishlist";
 
 function clampQuantity(value: unknown): number | null {
   if (typeof value !== "number" || !Number.isInteger(value) || value < 1) return null;
@@ -34,11 +38,11 @@ function isValidSize(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0 && value.trim().length <= 20;
 }
 
-function readStorage(key: string): unknown {
+function readStorage(key: string, legacyKey?: string): unknown {
   if (typeof localStorage === "undefined") return null;
 
   try {
-    const raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(key) ?? (legacyKey ? localStorage.getItem(legacyKey) : null);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
@@ -67,7 +71,7 @@ function findCurrentProduct(value: unknown): Product | null {
 }
 
 function loadCart(): CartItem[] {
-  const parsed = readStorage("renie-cart");
+  const parsed = readStorage(CART_STORAGE_KEY, LEGACY_CART_STORAGE_KEY);
   if (!Array.isArray(parsed)) return [];
 
   return parsed.flatMap((item): CartItem[] => {
@@ -81,7 +85,7 @@ function loadCart(): CartItem[] {
 }
 
 function loadWishlist(): Product[] {
-  const parsed = readStorage("renie-wishlist");
+  const parsed = readStorage(WISHLIST_STORAGE_KEY, LEGACY_WISHLIST_STORAGE_KEY);
   if (!Array.isArray(parsed)) return [];
 
   const seen = new Set<number>();
@@ -98,11 +102,11 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = useState<Product[]>(loadWishlist);
 
   useEffect(() => {
-    writeStorage("renie-cart", cart);
+    writeStorage(CART_STORAGE_KEY, cart);
   }, [cart]);
 
   useEffect(() => {
-    writeStorage("renie-wishlist", wishlist);
+    writeStorage(WISHLIST_STORAGE_KEY, wishlist);
   }, [wishlist]);
 
   const addToCart = useCallback((product: Product, size: string) => {
