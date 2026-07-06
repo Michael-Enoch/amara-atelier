@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import type { Product } from "../data/types";
 import { getBestSellers, searchProducts } from "../services/productService";
 import { handleImageError, imageUrl } from "../lib/images";
+import { BUSINESS } from "../config";
 
 interface SearchOverlayProps {
   open: boolean;
@@ -76,7 +77,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
               <div className="flex items-center gap-3 h-16 md:h-20 border-b border-border">
                 <Search size={20} className="text-muted-foreground flex-shrink-0" aria-hidden="true" />
                 <label htmlFor="search-input" className="sr-only">
-                  Search Renie O Fashion
+                  Search {BUSINESS.name}
                 </label>
                 <input
                   id="search-input"
