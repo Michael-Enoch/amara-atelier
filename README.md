@@ -1,4 +1,4 @@
-# Renie O Fashion Website
+# Amara Atelier Website
 
 Production-ready Vite + React + TypeScript fashion showcase for a Nigerian luxury womenswear brand. The site supports bridal, bespoke, ready-to-wear browsing, wishlist/cart flows, and WhatsApp ordering.
 
@@ -37,10 +37,10 @@ npm run preview
 Copy `.env.example` to `.env` for local overrides.
 
 ```bash
-VITE_BUSINESS_NAME="Renie O Fashion"
+VITE_BUSINESS_NAME="Amara Atelier"
 VITE_BUSINESS_LOCATION="Port Harcourt, Rivers State, Nigeria"
-VITE_INSTAGRAM_HANDLE="renie_o_fashion"
-VITE_INSTAGRAM_URL="https://www.instagram.com/renie_o_fashion/"
+VITE_INSTAGRAM_HANDLE="amara_atelier"
+VITE_INSTAGRAM_URL="https://www.instagram.com/amara_atelier/"
 VITE_WHATSAPP_NUMBER="2348000000000"
 ```
 
