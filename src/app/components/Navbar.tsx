@@ -93,7 +93,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
             <button
               onClick={() => navigate("/")}
               className="flex flex-col items-start leading-none cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2"
-              aria-label="Maple Stitches — go to home"
+              aria-label="Amara Atelier — go to home"
             >
               <span
                 style={{ fontFamily: "var(--font-display)", letterSpacing: "0.06em" }}
