@@ -74,7 +74,7 @@ export function Layout() {
 
       {/* Floating WhatsApp CTA — desktop only, hides when overlays are open */}
       <a
-        href={BUSINESS.whatsappLink("Hi Renie O Fashion! I'd like to browse your collections.")}
+        href={BUSINESS.whatsappLink("Hi Amara Atelier! I'd like to browse your collections.")}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Order on WhatsApp"
