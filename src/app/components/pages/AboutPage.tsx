@@ -21,7 +21,7 @@ export function AboutPage() {
     {
       icon: <Users size={26} />,
       title: "Community",
-      desc: "Maple stitches is a creative community — clients, students, and collaborators who believe in the power of fashion to transform lives.",
+      desc: "Amara Atelier is a creative community — clients, students, and collaborators who believe in the power of fashion to transform lives.",
     },
     {
       icon: <BookOpen size={26} />,
@@ -106,13 +106,13 @@ export function AboutPage() {
               className="text-muted-foreground text-sm leading-relaxed space-y-4"
             >
               <p>
-                Maple Stitches. is Port Harcourt's foremost luxury womenswear designer — a creative force behind hundreds of bridal gowns, bespoke commissions, and ready-to-wear pieces that have dressed women across Nigeria for their most important moments.
+                Amara Atelier is Port Harcourt's foremost luxury womenswear studio — a creative force behind bridal gowns, bespoke commissions, and ready-to-wear pieces that dress women across Nigeria for their most important moments.
               </p>
               <p>
                 With deep expertise in pattern-making, garment construction, and couture finishing, every piece that leaves the atelier is a reflection of the woman who commissioned it — her silhouette, her occasion, her vision.
               </p>
               <p>
-                Beyond design, Maple Stitches. is committed to education — running fashion classes and mentorship programs in Port Harcourt to grow the local fashion industry and equip the next generation of Nigerian designers with real skills.
+                Beyond design, Amara Atelier is committed to education — running fashion classes and mentorship programs in Port Harcourt to grow the local fashion industry and equip the next generation of Nigerian designers with real skills.
               </p>
             </div>
 
@@ -142,7 +142,7 @@ export function AboutPage() {
 
             <div className="pt-1">
               <p style={{ fontFamily: "var(--font-display)" }} className="text-foreground text-xl">
-                Maple Stitches.
+                Amara Atelier
               </p>
               <p
                 style={{ fontFamily: "var(--font-body)", letterSpacing: "0.15em" }}
@@ -231,7 +231,7 @@ export function AboutPage() {
                 style={{ fontFamily: "var(--font-display)" }}
                 className="text-foreground text-3xl md:text-5xl leading-tight"
               >
-                Learn to Design & Sew at the Maple stitches Fashion Academy
+                Learn to Design & Sew at the Amara Atelier Fashion Academy
               </h2>
               <p
                 style={{ fontFamily: "var(--font-body)" }}
@@ -243,7 +243,7 @@ export function AboutPage() {
                 style={{ fontFamily: "var(--font-body)" }}
                 className="text-muted-foreground text-sm leading-relaxed"
               >
-                Classes are kept small and intimate — you get personal attention, industry-standard techniques, and direct mentorship from Maple stitches. herself. Online options are available for students outside Port Harcourt.
+                Classes are kept small and intimate — you get personal attention, industry-standard techniques, and direct mentorship from our lead designer. Online options are available for students outside Port Harcourt.
               </p>
 
               <div className="space-y-2">
