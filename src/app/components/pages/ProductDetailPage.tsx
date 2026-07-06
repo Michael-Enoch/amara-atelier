@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import {
   Heart, MessageCircle, ChevronLeft, ChevronRight,
   Star, Check, ShoppingBag, Calendar, Ruler, Palette, Sparkles,
+  Truck, MapPin, Scissors,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useLocation, useParams, useNavigate } from "react-router";
@@ -403,7 +404,7 @@ export function ProductDetailPage() {
                 {isBridal
                   ? `The ${product.name} is a handcrafted bridal gown built for your most important day. Every detail — silhouette, fabric weight, finishing — is designed to make you feel extraordinary from first try-on to final dance.`
                   : isBespoke
-                  ? `The ${product.name} is a made-to-measure commission built entirely around your measurements, vision, and occasion. You'll work directly with Renie O. from concept sketch to final fitting.`
+                  ? `The ${product.name} is a made-to-measure commission built entirely around your measurements, vision, and occasion. You'll work directly with the Amara Atelier designer from concept sketch to final fitting.`
                   : `The ${product.name} is a ready-to-wear luxury piece — designed in-house and available for immediate order. Crafted with premium fabric and finished to designer standards.`}
               </p>
               <ul style={{ fontFamily: "var(--font-body)" }} className="text-xs text-muted-foreground space-y-1.5">
@@ -472,13 +473,25 @@ export function ProductDetailPage() {
             {/* Trust badges */}
             <div className="grid grid-cols-3 gap-2 pt-2 border-t border-border">
               {(isBridal
-                ? [{ icon: "✦", text: "Bridal Couture" }, { icon: "📐", text: "Custom Fit" }, { icon: "🇳🇬", text: "PHC Made" }]
+                ? [
+                    { icon: <Sparkles size={18} aria-hidden="true" />, text: "Bridal Couture" },
+                    { icon: <Ruler size={18} aria-hidden="true" />, text: "Custom Fit" },
+                    { icon: <MapPin size={18} aria-hidden="true" />, text: "PHC Made" },
+                  ]
                 : isBespoke
-                ? [{ icon: "✂️", text: "Made-to-Measure" }, { icon: "🎨", text: "Your Design" }, { icon: "🚚", text: "Nationwide" }]
-                : [{ icon: "✨", text: "Premium Quality" }, { icon: "🚚", text: "Fast Delivery" }, { icon: "🇳🇬", text: "PHC Designed" }]
+                ? [
+                    { icon: <Scissors size={18} aria-hidden="true" />, text: "Made-to-Measure" },
+                    { icon: <Palette size={18} aria-hidden="true" />, text: "Your Design" },
+                    { icon: <Truck size={18} aria-hidden="true" />, text: "Nationwide" },
+                  ]
+                : [
+                    { icon: <Sparkles size={18} aria-hidden="true" />, text: "Premium Quality" },
+                    { icon: <Truck size={18} aria-hidden="true" />, text: "Fast Delivery" },
+                    { icon: <MapPin size={18} aria-hidden="true" />, text: "PHC Designed" },
+                  ]
               ).map((b) => (
                 <div key={b.text} className="text-center space-y-1 py-2">
-                  <span className="text-xl" aria-hidden="true">{b.icon}</span>
+                  <span className="flex h-6 items-center justify-center text-[#C9A96E]">{b.icon}</span>
                   <p style={{ fontFamily: "var(--font-body)" }} className="text-[9px] text-muted-foreground uppercase tracking-wider">
                     {b.text}
                   </p>
