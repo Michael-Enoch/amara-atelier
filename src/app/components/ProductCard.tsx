@@ -10,9 +10,10 @@ export type { Product };
 interface ProductCardProps {
   product: Product;
   onViewDetails: (id: number) => void;
+  loading?: "eager" | "lazy";
 }
 
-function ProductCardComponent({ product, onViewDetails }: ProductCardProps) {
+function ProductCardComponent({ product, onViewDetails, loading = "lazy" }: ProductCardProps) {
   const { toggleWishlist, isWishlisted } = useShop();
   const wishlisted = isWishlisted(product.id);
 
@@ -34,7 +35,7 @@ function ProductCardComponent({ product, onViewDetails }: ProductCardProps) {
           src={imageUrl(product.image, "w=600&h=800&fit=crop&auto=format")}
           alt={product.name}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-hover:opacity-0 md:group-hover:opacity-0"
-          loading="lazy"
+          loading={loading}
           decoding="async"
           onError={handleImageError}
         />
