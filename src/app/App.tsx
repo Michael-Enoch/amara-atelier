@@ -35,7 +35,7 @@ function PageSkeleton() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-6" aria-hidden="true">
           {PAGE_SKELETON_ITEMS.map((item) => (
             <div key={item} className="space-y-2.5">
-              <div className="aspect-[3/4] bg-[#F0EDE8] animate-pulse" />
+              <div className="aspect-3/4 bg-[#F0EDE8] animate-pulse" />
               <div className="h-3 w-2/5 bg-[#E8E4DE] animate-pulse" />
               <div className="h-4 w-4/5 bg-[#E8E4DE] animate-pulse" />
             </div>
