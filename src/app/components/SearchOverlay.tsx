@@ -73,7 +73,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-[60] bg-[#1C1C1C]/50 backdrop-blur-sm"
+            className="fixed inset-0 z-60 bg-[#1C1C1C]/50 backdrop-blur-sm"
             onClick={onClose}
             aria-hidden="true"
           />
@@ -87,12 +87,12 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Search"
-            className="fixed top-0 left-0 right-0 z-[70] bg-[#FAF8F5] shadow-xl"
+            className="fixed top-0 left-0 right-0 z-70 bg-[#FAF8F5] shadow-xl"
           >
             {/* Input row */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
               <div className="flex items-center gap-3 h-16 md:h-20 border-b border-border">
-                <Search size={20} className="text-muted-foreground flex-shrink-0" aria-hidden="true" />
+                <Search size={20} className="text-muted-foreground shrink-0" aria-hidden="true" />
                 <label htmlFor="search-input" className="sr-only">
                   Search {BUSINESS.name}
                 </label>
@@ -112,7 +112,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="Clear search"
-                    className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 min-w-9 min-h-9 flex items-center justify-center"
                   >
                     <X size={16} aria-hidden="true" />
                   </button>
@@ -121,7 +121,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   type="button"
                   onClick={onClose}
                   aria-label="Close search"
-                  className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 ml-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 ml-1 min-w-11 min-h-11 flex items-center justify-center"
                 >
                   <X size={20} aria-hidden="true" />
                 </button>
@@ -150,9 +150,9 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                           <button
                             type="button"
                             onClick={() => handleSelect(p.id)}
-                            className="w-full flex items-center gap-4 p-3 hover:bg-[#F5F3EF] transition-colors group cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+                            className="w-full flex items-center gap-4 p-3 hover:bg-[#F5F3EF] transition-colors group cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                           >
-                            <div className="w-14 h-16 flex-shrink-0 overflow-hidden bg-[#F0EDE8]">
+                            <div className="w-14 h-16 shrink-0 overflow-hidden bg-[#F0EDE8]">
                               <img
                                 src={imageUrl(p.image, "w=120&h=160&fit=crop&auto=format")}
                                 alt={p.name}
@@ -173,7 +173,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                                 ₦{p.price.toLocaleString()}
                               </p>
                             </div>
-                            <ArrowRight size={16} className="text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0" aria-hidden="true" />
+                            <ArrowRight size={16} className="text-muted-foreground group-hover:text-foreground transition-colors shrink-0" aria-hidden="true" />
                           </button>
                         </li>
                       ))}
@@ -201,10 +201,10 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                         type="button"
                         key={p.id}
                         onClick={() => handleSelect(p.id)}
-                        className="group text-left cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+                        className="group text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                         aria-label={`View ${p.name}`}
                       >
-                        <div className="aspect-[3/4] overflow-hidden bg-[#F0EDE8] mb-2">
+                        <div className="aspect-3/4 overflow-hidden bg-[#F0EDE8] mb-2">
                           <img
                             src={imageUrl(p.image, "w=300&h=400&fit=crop&auto=format")}
                             alt={p.name}
@@ -235,7 +235,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                           type="button"
                           key={cat}
                           onClick={() => setQuery(cat)}
-                          className="text-xs px-3 py-1.5 border border-border text-muted-foreground hover:border-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] min-h-[36px]"
+                          className="text-xs px-3 py-1.5 border border-border text-muted-foreground hover:border-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C9A96E] min-h-9"
                           style={{ fontFamily: "var(--font-body)", letterSpacing: "0.1em" }}
                         >
                           {cat}
