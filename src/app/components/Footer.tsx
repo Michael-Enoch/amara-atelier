@@ -104,7 +104,7 @@ export function Footer() {
                     <button
                       type="button"
                       onClick={() => navigate(l.to)}
-                      className="text-[#7A7570] hover:text-[#FAF8F5] text-sm transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2"
+                      className="text-[#7A7570] hover:text-[#FAF8F5] text-sm transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2"
                       style={{ fontFamily: "var(--font-body)" }}
                     >
                       {l.label}
