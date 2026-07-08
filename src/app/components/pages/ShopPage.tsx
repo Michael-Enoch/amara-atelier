@@ -17,11 +17,10 @@ import { ProductCard } from "../ProductCard";
 import { BUSINESS } from "../../config";
 import {
   CATALOG_CATEGORIES,
-  CatalogCategory,
   getProductPage,
   isCatalogCategory,
-  ProductSortOption,
 } from "../../services/productService";
+import type { CatalogCategory, ProductSortOption } from "../../services/productService";
 
 const CATEGORY_META: Record<string, { icon: ReactNode; desc: string; cta: string; ctaHref: string }> = {
   Bridals: {
@@ -51,6 +50,10 @@ const SORT_OPTIONS = [
 ] as const;
 
 const PRODUCT_PAGE_SIZE = 12;
+const PRODUCT_GRID_SKELETON_ITEMS = Array.from(
+  { length: PRODUCT_PAGE_SIZE },
+  (_, index) => `product-grid-skeleton-${index + 1}`
+);
 
 type PaginationItem = number | `ellipsis-${number}`;
 
@@ -76,8 +79,8 @@ function getPaginationItems(currentPage: number, pageCount: number): PaginationI
 function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-6" aria-hidden="true">
-      {Array.from({ length: PRODUCT_PAGE_SIZE }, (_, index) => (
-        <div key={index} className="space-y-2.5">
+      {PRODUCT_GRID_SKELETON_ITEMS.map((item) => (
+        <div key={item} className="space-y-2.5">
           <div className="aspect-[3/4] bg-[#F0EDE8] animate-pulse" />
           <div className="h-3 w-2/5 bg-[#E8E4DE] animate-pulse" />
           <div className="h-4 w-4/5 bg-[#E8E4DE] animate-pulse" />
@@ -198,14 +201,14 @@ export function ShopPage() {
         {/* Category tabs — inner overflow-x-auto so only tabs scroll, not the page */}
         <div
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center overflow-x-auto scrollbar-hide"
-          role="tablist"
+          role="group"
           aria-label="Filter by category"
         >
           {CATALOG_CATEGORIES.map((cat) => (
             <button
+              type="button"
               key={cat}
-              role="tab"
-              aria-selected={activeCategory === cat}
+              aria-pressed={activeCategory === cat}
               onClick={() => handleCategoryChange(cat)}
               className={`whitespace-nowrap px-5 py-3.5 text-xs uppercase tracking-widest border-b-2 transition-all cursor-pointer flex-shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
                 activeCategory === cat
@@ -258,6 +261,7 @@ export function ShopPage() {
             {catalogPage.total} {catalogPage.total === 1 ? "result" : "results"}
             {activeCategory !== "All" && (
               <button
+                type="button"
                 onClick={() => handleCategoryChange("All")}
                 aria-label="Clear category filter"
                 className="ml-2 inline-flex items-center gap-1 text-[#C9A96E] hover:text-foreground transition-colors cursor-pointer"
@@ -270,9 +274,11 @@ export function ShopPage() {
           {/* Sort dropdown */}
           <div className="relative" ref={sortRef}>
             <button
+              type="button"
               onClick={() => setSortOpen(!sortOpen)}
-              aria-haspopup="listbox"
-              // aria-expanded={sortOpen}
+              aria-haspopup="menu"
+              aria-expanded={sortOpen}
+              aria-controls={sortOpen ? "shop-sort-menu" : undefined}
               className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground uppercase tracking-widest cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] min-h-[36px]"
               style={{ fontFamily: "var(--font-body)" }}
             >
@@ -288,7 +294,8 @@ export function ShopPage() {
             <AnimatePresence>
               {sortOpen && (
                 <motion.ul
-                  role="listbox"
+                  id="shop-sort-menu"
+                  role="menu"
                   aria-label="Sort options"
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -297,8 +304,11 @@ export function ShopPage() {
                   className="absolute right-0 top-full mt-2 bg-white border border-border shadow-lg min-w-[180px] z-50"
                 >
                   {SORT_OPTIONS.map((opt) => (
-                    <li key={opt.value} role="option">
+                    <li key={opt.value} role="none">
                       <button
+                        type="button"
+                        role="menuitemradio"
+                        aria-checked={sortBy === opt.value}
                         onClick={() => { setSortBy(opt.value); setSortOpen(false); }}
                         className={`w-full text-left px-4 py-3 text-xs cursor-pointer transition-colors min-h-[44px] ${
                           sortBy === opt.value
@@ -328,6 +338,7 @@ export function ShopPage() {
               No pieces found
             </p>
             <button
+              type="button"
               onClick={() => handleCategoryChange("All")}
               className="text-sm text-[#C9A96E] underline underline-offset-4 cursor-pointer"
               style={{ fontFamily: "var(--font-body)" }}
@@ -355,6 +366,7 @@ export function ShopPage() {
             </p>
             <div className="flex items-center justify-center gap-1.5">
               <button
+                type="button"
                 onClick={() => handlePageChange(catalogPage.page - 1)}
                 disabled={catalogPage.page <= 1}
                 aria-label="Previous products page"
@@ -365,6 +377,7 @@ export function ShopPage() {
               {paginationItems.map((item) =>
                 typeof item === "number" ? (
                   <button
+                    type="button"
                     key={item}
                     onClick={() => handlePageChange(item)}
                     aria-current={catalogPage.page === item ? "page" : undefined}
@@ -384,6 +397,7 @@ export function ShopPage() {
                 )
               )}
               <button
+                type="button"
                 onClick={() => handlePageChange(catalogPage.page + 1)}
                 disabled={catalogPage.page >= catalogPage.pageCount}
                 aria-label="Next products page"

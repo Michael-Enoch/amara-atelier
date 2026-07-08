@@ -33,7 +33,7 @@ export function LookbookCarousel() {
         <div className="flex" role="list">
           {LOOKBOOK_SLIDES.map((slide, i) => (
             <div
-              key={i}
+              key={slide.label}
               role="listitem"
               aria-label={slide.label}
               className="relative flex-[0_0_100%] min-h-[520px]"
@@ -70,13 +70,13 @@ export function LookbookCarousel() {
       {/* Controls — safe-zone aware: right-3 on mobile, right-16 on desktop */}
       <div className="absolute bottom-6 right-3 md:bottom-8 md:right-16 flex items-center gap-2 md:gap-3" role="group" aria-label="Carousel controls">
         {/* Dot indicators */}
-        <div className="flex gap-1.5 mr-2" role="tablist" aria-label="Go to slide">
-          {LOOKBOOK_SLIDES.map((_, i) => (
+        <div className="flex gap-1.5 mr-2" role="group" aria-label="Go to slide">
+          {LOOKBOOK_SLIDES.map((slide, i) => (
             <button
-              key={i}
-              role="tab"
-              aria-selected={selectedIndex === i}
-              aria-label={`Slide ${i + 1}`}
+              type="button"
+              key={slide.label}
+              aria-current={selectedIndex === i ? "true" : undefined}
+              aria-label={`Show slide ${i + 1} of ${LOOKBOOK_SLIDES.length}`}
               onClick={() => emblaApi?.scrollTo(i)}
               className={`transition-all duration-300 cursor-pointer rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-white ${
                 selectedIndex === i ? "bg-[#C9A96E] w-6 h-1.5" : "bg-white/40 w-1.5 h-1.5"
@@ -85,6 +85,7 @@ export function LookbookCarousel() {
           ))}
         </div>
         <button
+          type="button"
           onClick={scrollPrev}
           aria-label="Previous slide"
           className="w-10 h-10 border border-white/30 text-white flex items-center justify-center hover:border-[#C9A96E] hover:text-[#C9A96E] transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
@@ -92,6 +93,7 @@ export function LookbookCarousel() {
           <ChevronLeft size={18} aria-hidden="true" />
         </button>
         <button
+          type="button"
           onClick={scrollNext}
           aria-label="Next slide"
           className="w-10 h-10 border border-white/30 text-white flex items-center justify-center hover:border-[#C9A96E] hover:text-[#C9A96E] transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
@@ -102,6 +104,7 @@ export function LookbookCarousel() {
 
       {/* Vertical "View Collection" label — desktop */}
       <button
+        type="button"
         onClick={() => navigate("/shop")}
         className="absolute top-1/2 right-6 md:right-16 -translate-y-1/2 hidden md:flex flex-col items-center gap-2 group cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
         aria-label="View collection"

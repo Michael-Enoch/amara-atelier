@@ -41,7 +41,7 @@ export function VideoReelGrid() {
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors self-start md:self-auto"
             style={{ fontFamily: "var(--font-body)", letterSpacing: "0.1em" }}
           >
-            <Instagram size={16} /> @{BUSINESS.instagram}
+            <Instagram size={16} aria-hidden="true" /> @{BUSINESS.instagram}
           </a>
         </motion.div>
 
@@ -71,19 +71,19 @@ export function VideoReelGrid() {
               />
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1C]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1C]/80 via-transparent to-transparent" aria-hidden="true" />
 
               {/* Dark hover overlay */}
               <div className={`absolute inset-0 transition-opacity duration-300 bg-[#1C1C1C]/30 ${
                 hoveredId === reel.id ? "opacity-100" : "opacity-0"
-              }`} />
+              }`} aria-hidden="true" />
 
               {/* Play button — centred, always present at reduced opacity, full on hover */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className={`w-11 h-11 bg-white/80 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
                   hoveredId === reel.id ? "scale-110 bg-white/95" : "scale-90 opacity-70"
                 }`}>
-                  <Play size={16} className="text-[#1C1C1C] ml-0.5" fill="#1C1C1C" />
+                  <Play size={16} className="text-[#1C1C1C] ml-0.5" fill="#1C1C1C" aria-hidden="true" />
                 </div>
               </div>
 
@@ -106,7 +106,7 @@ export function VideoReelGrid() {
                     style={{ fontFamily: "var(--font-body)" }}
                     className="text-[#FAFAF8]/60 text-[9px] flex items-center gap-1"
                   >
-                    <Volume2 size={8} /> {reel.duration}
+                    <Volume2 size={8} aria-hidden="true" /> {reel.duration}
                   </span>
                 </div>
               </div>
@@ -122,7 +122,7 @@ export function VideoReelGrid() {
             className="inline-flex items-center gap-2 border border-border text-foreground text-xs uppercase tracking-widest px-6 py-3 hover:bg-foreground hover:text-background transition-all"
             style={{ fontFamily: "var(--font-body)" }}
           >
-            <Instagram size={14} /> Follow for More on Instagram
+            <Instagram size={14} aria-hidden="true" /> Follow for More on Instagram
           </a>
         </div>
       </div>

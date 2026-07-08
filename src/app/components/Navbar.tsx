@@ -91,6 +91,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <button
+              type="button"
               onClick={() => navigate("/")}
               className="flex flex-col items-start leading-none cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2"
               aria-label="Amara Atelier — go to home"
@@ -113,6 +114,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
             <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6 lg:gap-9">
               {NAV_LINKS.map((l) => (
                 <button
+                  type="button"
                   key={l.label}
                   onClick={() => navigate(l.to)}
                   className={`text-[11px] uppercase tracking-widest transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2 ${
@@ -135,6 +137,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
             <div className="flex items-center gap-0.5">
               {/* Search */}
               <button
+                type="button"
                 onClick={onOpenSearch}
                 aria-label="Search products"
                 className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
@@ -146,6 +149,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
 
               {/* Wishlist — opens wishlist tab */}
               <button
+                type="button"
                 onClick={onOpenWishlist}
                 aria-label={`Saved items${wishlist.length > 0 ? ` (${wishlist.length})` : ""}`}
                 className={`p-2.5 min-w-[44px] min-h-[44px] relative flex items-center justify-center transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
@@ -162,6 +166,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
 
               {/* Cart — opens cart tab */}
               <button
+                type="button"
                 onClick={onOpenCart}
                 aria-label={`Shopping cart${cartCount > 0 ? ` (${cartCount} items)` : ""}`}
                 className={`p-2.5 min-w-[44px] min-h-[44px] relative flex items-center justify-center transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
@@ -178,13 +183,14 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
 
               {/* Hamburger (mobile) */}
               <button
+                type="button"
                 className={`md:hidden p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
                   isHomeAtTop ? "text-[#FAF8F5]/70 hover:text-[#FAF8F5]" : "text-muted-foreground hover:text-foreground"
                 }`}
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
-                // aria-expanded={menuOpen}
-                // aria-controls="mobile-nav"
+                aria-expanded={menuOpen}
+                aria-controls={menuOpen ? "mobile-nav" : undefined}
               >
                 {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
               </button>
@@ -212,6 +218,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
               <div className="flex flex-col divide-y divide-[#2A2A2A]">
                 {MOBILE_LINKS.map((l) => (
                   <button
+                    type="button"
                     key={l.label}
                     onClick={() => navigate(l.to)}
                     className="text-2xl text-left text-[#FAF8F5] py-5 cursor-pointer flex items-center justify-between focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2"
@@ -227,6 +234,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
             {/* Utility actions */}
             <div className="mt-6 flex flex-col gap-1 border-t border-[#2A2A2A] pt-4">
               <button
+                type="button"
                 onClick={() => { onOpenSearch(); setMenuOpen(false); }}
                 className="flex items-center gap-3 text-sm text-[#7A7570] py-3 cursor-pointer hover:text-[#FAF8F5] transition-colors min-h-[44px]"
                 style={{ fontFamily: "var(--font-body)" }}
@@ -234,6 +242,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
                 <Search size={15} aria-hidden="true" /> Search
               </button>
               <button
+                type="button"
                 onClick={() => { onOpenCart(); setMenuOpen(false); }}
                 className="flex items-center gap-3 text-sm text-[#7A7570] py-3 cursor-pointer hover:text-[#FAF8F5] transition-colors min-h-[44px]"
                 style={{ fontFamily: "var(--font-body)" }}
@@ -241,6 +250,7 @@ export function Navbar({ onOpenSearch, onOpenCart, onOpenWishlist }: NavbarProps
                 <ShoppingBag size={15} aria-hidden="true" /> Cart{cartCount > 0 ? ` (${cartCount})` : ""}
               </button>
               <button
+                type="button"
                 onClick={() => { onOpenWishlist(); setMenuOpen(false); }}
                 className="flex items-center gap-3 text-sm text-[#7A7570] py-3 cursor-pointer hover:text-[#FAF8F5] transition-colors min-h-[44px]"
                 style={{ fontFamily: "var(--font-body)" }}

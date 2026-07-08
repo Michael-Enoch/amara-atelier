@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import type { Dispatch, ReactNode, RefObject, SetStateAction } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import {
   Heart,
   MessageCircle,
@@ -32,6 +32,16 @@ const SIZES = ["XS", "S", "M", "L", "XL"] as const;
 const BODY_FONT = { fontFamily: "var(--font-body)" };
 const DISPLAY_FONT = { fontFamily: "var(--font-display)" };
 
+// Shared focus ring so every interactive element gets a visible,
+// consistent keyboard-focus indicator (also avoids duplicating this
+// literal a dozen times across the file).
+const FOCUS_RING =
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]";
+
+const SIZE_ERROR_TIMEOUT_MS = 2500;
+const ADDED_TO_CART_TIMEOUT_MS = 2500;
+const SIZE_GUIDE_ID = "product-size-guide";
+
 const CONSULTATION_STEPS = [
   {
     icon: <MessageCircle size={15} aria-hidden="true" />,
@@ -57,6 +67,16 @@ const CONSULTATION_STEPS = [
 
 type Product = NonNullable<ReturnType<typeof getProductById>>;
 type Navigate = ReturnType<typeof useNavigate>;
+
+// Plain structural ref shapes, defined locally instead of importing
+// React's own RefObject<T>. React's RefObject<T> is defined differently
+// across major versions (readonly `current: T | null` vs. mutable
+// `current: T`), so a single hardcoded RefObject<HTMLDivElement>
+// annotation type-checks under one major version and fails under the
+// other. These shapes are structurally compatible with the `ref` JSX
+// attribute (and safe to read/write `.current` on) in every version.
+type DivRef = { current: HTMLDivElement | null };
+type TimeoutRef = { current: number | null };
 
 type ProductFlags = {
   isBridal: boolean;
@@ -122,6 +142,26 @@ function ProductDetailContent({
   const sizeSectionRef = useRef<HTMLDivElement>(null);
   const sizeGuideRef = useRef<HTMLDivElement>(null);
 
+  // Pending setTimeout handles for the two transient UI states below.
+  // Tracking them lets us (a) cancel a stale timer if the same action
+  // fires again before it elapses, so a fast double-click can't cause
+  // the confirmation/error message to disappear early, and (b) clear
+  // them on unmount so we never call setState on an unmounted component.
+  const sizeErrorTimeoutRef: TimeoutRef = useRef(null);
+  const addedToCartTimeoutRef: TimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (sizeErrorTimeoutRef.current) {
+        window.clearTimeout(sizeErrorTimeoutRef.current);
+      }
+
+      if (addedToCartTimeoutRef.current) {
+        window.clearTimeout(addedToCartTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const waHref = getWhatsAppHref(product, flags, selectedSize);
   const whatsappLabel = getWhatsAppLabel(flags);
 
@@ -132,12 +172,13 @@ function ProductDetailContent({
         setSizeError,
         sizeGuideRef,
         sizeSectionRef,
+        timeoutRef: sizeErrorTimeoutRef,
       });
       return;
     }
 
     addToCart(product, selectedSize);
-    showAddedToCartMessage(setAddedToCart);
+    showAddedToCartMessage(setAddedToCart, addedToCartTimeoutRef);
   };
 
   return (
@@ -199,8 +240,8 @@ type ProductInfoProps = {
   setSizeError: Dispatch<SetStateAction<boolean>>;
   sizeGuideOpen: boolean;
   setSizeGuideOpen: Dispatch<SetStateAction<boolean>>;
-  sizeSectionRef: RefObject<HTMLDivElement>;
-  sizeGuideRef: RefObject<HTMLDivElement>;
+  sizeSectionRef: DivRef;
+  sizeGuideRef: DivRef;
   waHref: string;
   whatsappLabel: string;
   handleAddToCart: () => void;
@@ -295,16 +336,18 @@ function ProductNotFound({ navigate }: { navigate: Navigate }) {
 
         <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
           <button
+            type="button"
             onClick={() => navigate("/shop")}
-            className="bg-foreground text-background text-xs uppercase tracking-widest px-7 py-3.5 hover:bg-[#C9A96E] transition-colors cursor-pointer min-h-[48px]"
+            className={`bg-foreground text-background text-xs uppercase tracking-widest px-7 py-3.5 hover:bg-[#C9A96E] transition-colors cursor-pointer min-h-[48px] ${FOCUS_RING}`}
             style={BODY_FONT}
           >
             View Collections
           </button>
 
           <button
+            type="button"
             onClick={() => navigate("/")}
-            className="border border-border text-foreground text-xs uppercase tracking-widest px-7 py-3.5 hover:border-[#C9A96E] hover:text-[#C9A96E] transition-colors cursor-pointer min-h-[48px]"
+            className={`border border-border text-foreground text-xs uppercase tracking-widest px-7 py-3.5 hover:border-[#C9A96E] hover:text-[#C9A96E] transition-colors cursor-pointer min-h-[48px] ${FOCUS_RING}`}
             style={BODY_FONT}
           >
             Return Home
@@ -327,8 +370,9 @@ function Breadcrumb({ product, navigate }: { product: Product; navigate: Navigat
       >
         <li>
           <button
+            type="button"
             onClick={() => navigate("/")}
-            className="hover:text-foreground cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+            className={`hover:text-foreground cursor-pointer transition-colors ${FOCUS_RING}`}
           >
             Home
           </button>
@@ -338,8 +382,9 @@ function Breadcrumb({ product, navigate }: { product: Product; navigate: Navigat
 
         <li>
           <button
+            type="button"
             onClick={() => navigate(`/shop/${product.category}`)}
-            className="hover:text-foreground cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+            className={`hover:text-foreground cursor-pointer transition-colors ${FOCUS_RING}`}
           >
             {product.category}
           </button>
@@ -457,36 +502,34 @@ function GalleryButton({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={label}
-      className={`absolute ${positionClass} top-1/2 -translate-y-1/2 w-10 h-10 bg-white/85 flex items-center justify-center hover:bg-white transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]`}
+      className={`absolute ${positionClass} top-1/2 -translate-y-1/2 w-10 h-10 bg-white/85 flex items-center justify-center hover:bg-white transition-colors cursor-pointer ${FOCUS_RING}`}
     >
       <Icon size={16} aria-hidden="true" />
     </button>
   );
 }
 
-function GalleryDots({
-  images,
-  activeImg,
-  setActiveImg,
-}: {
+function GalleryDots(props: Readonly<{
   images: string[];
   activeImg: number;
   setActiveImg: Dispatch<SetStateAction<number>>;
-}) {
+}>) {
+  const { images, activeImg, setActiveImg } = props;
   return (
     <div
       className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 md:hidden"
-      role="tablist"
+      role="group"
       aria-label="Image gallery"
     >
-      {images.map((_, index) => (
+      {images.map((img, index) => (
         <button
-          key={index}
-          role="tab"
-          aria-selected={activeImg === index}
-          aria-label={`View ${index + 1}`}
+          type="button"
+          key={img}
+          aria-current={activeImg === index ? "true" : undefined}
+          aria-label={`Show image ${index + 1} of ${images.length}`}
           onClick={() => setActiveImg(index)}
           className={`h-1.5 rounded-full transition-all cursor-pointer ${
             activeImg === index ? "bg-white w-4" : "bg-white/50 w-1.5"
@@ -509,17 +552,17 @@ function GalleryThumbnails({
   return (
     <div
       className="hidden md:grid grid-cols-3 gap-2"
-      role="tablist"
+      role="group"
       aria-label="Image thumbnails"
     >
       {images.map((img, index) => (
         <button
-          key={`${img}-${index}`}
-          role="tab"
-          aria-selected={activeImg === index}
-          aria-label={`View ${index + 1}`}
+          type="button"
+          key={img}
+          aria-current={activeImg === index ? "true" : undefined}
+          aria-label={`Show image ${index + 1} of ${images.length}`}
           onClick={() => setActiveImg(index)}
-          className={`aspect-[3/4] overflow-hidden bg-[#F0EDE8] cursor-pointer transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
+          className={`aspect-[3/4] overflow-hidden bg-[#F0EDE8] cursor-pointer transition-opacity ${FOCUS_RING} ${
             activeImg === index
               ? "ring-1 ring-foreground"
               : "opacity-60 hover:opacity-100"
@@ -562,7 +605,7 @@ function ProductHeader({ product, flags }: { product: Product; flags: ProductFla
 
 function RatingStars() {
   return (
-    <div className="flex gap-0.5" aria-label="5 out of 5 stars">
+    <div className="flex gap-0.5" role="img" aria-label="5 out of 5 stars">
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
@@ -622,8 +665,8 @@ type OrderSectionProps = {
   setSizeError: Dispatch<SetStateAction<boolean>>;
   sizeGuideOpen: boolean;
   setSizeGuideOpen: Dispatch<SetStateAction<boolean>>;
-  sizeSectionRef: RefObject<HTMLDivElement>;
-  sizeGuideRef: RefObject<HTMLDivElement>;
+  sizeSectionRef: DivRef;
+  sizeGuideRef: DivRef;
 };
 
 function OrderSection(props: OrderSectionProps) {
@@ -657,9 +700,11 @@ function SizeSelector({
         </p>
 
         <button
-          className="font-(--font-body) text-xs text-muted-foreground underline underline-offset-2 cursor-pointer hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+          type="button"
+          className={`font-(--font-body) text-xs text-muted-foreground underline underline-offset-2 cursor-pointer hover:text-foreground ${FOCUS_RING}`}
           onClick={() => setSizeGuideOpen((open) => !open)}
-          aria-expanded={sizeGuideOpen ? "true" : "false"}
+          aria-expanded={sizeGuideOpen}
+          aria-controls={sizeGuideOpen ? SIZE_GUIDE_ID : undefined}
         >
           Size Guide
         </button>
@@ -694,6 +739,7 @@ function SizeButtons({
     <div className="flex gap-2 flex-wrap" role="group" aria-label="Select size">
       {SIZES.map((size) => (
         <button
+          type="button"
           key={size}
           onClick={() => {
             setSelectedSize(size === selectedSize ? null : size);
@@ -701,7 +747,7 @@ function SizeButtons({
           }}
           aria-pressed={selectedSize === size}
           aria-label={`Size ${size}`}
-          className={`font-(--font-body) w-12 h-12 text-sm border transition-all cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${getSizeButtonClass(
+          className={`font-(--font-body) w-12 h-12 text-sm border transition-all cursor-pointer ${FOCUS_RING} ${getSizeButtonClass(
             size,
             selectedSize,
             sizeError,
@@ -719,7 +765,7 @@ function SizeGuide({
   sizeGuideRef,
 }: {
   isOpen: boolean;
-  sizeGuideRef: RefObject<HTMLDivElement>;
+  sizeGuideRef: DivRef;
 }) {
   return (
     <AnimatePresence>
@@ -731,6 +777,7 @@ function SizeGuide({
           className="overflow-hidden"
         >
           <div
+            id={SIZE_GUIDE_ID}
             ref={sizeGuideRef}
             className="bg-[#F5F3EF] border border-border p-3 text-xs text-muted-foreground leading-relaxed"
           >
@@ -856,7 +903,7 @@ function WhatsAppButton({ href, label }: { href: string; label: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-full bg-[#25D366] text-white flex items-center justify-center gap-2.5 py-4 text-sm uppercase tracking-widest hover:bg-[#1ebe57] transition-colors min-h-[52px]"
+      className={`w-full bg-[#25D366] text-white flex items-center justify-center gap-2.5 py-4 text-sm uppercase tracking-widest hover:bg-[#1ebe57] transition-colors min-h-[52px] ${FOCUS_RING}`}
       style={BODY_FONT}
     >
       <MessageCircle size={17} aria-hidden="true" />
@@ -880,9 +927,10 @@ function AddToCartButton({
 
   return (
     <button
+      type="button"
       onClick={handleAddToCart}
       aria-label={addedToCart ? "Added to cart" : "Add to cart"}
-      className={`w-full flex items-center justify-center gap-2 py-3.5 text-sm uppercase tracking-widest transition-all cursor-pointer border min-h-[52px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
+      className={`w-full flex items-center justify-center gap-2 py-3.5 text-sm uppercase tracking-widest transition-all cursor-pointer border min-h-[52px] ${FOCUS_RING} ${
         addedToCart
           ? "border-[#C9A96E] bg-[#C9A96E] text-white"
           : "border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background"
@@ -913,13 +961,14 @@ function WishlistButton({
 }) {
   return (
     <button
+      type="button"
       onClick={() => toggleWishlist(product)}
       aria-label={
         wishlisted
           ? `Remove ${product.name} from favourites`
           : `Save ${product.name} to favourites`
       }
-      className={`w-full border py-3 text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all cursor-pointer min-h-[44px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] ${
+      className={`w-full border py-3 text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all cursor-pointer min-h-[44px] ${FOCUS_RING} ${
         wishlisted
           ? "border-[#C9A96E] text-[#C9A96E]"
           : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
@@ -1010,7 +1059,7 @@ function StickyMobileBar({
           href={waHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full bg-[#25D366] text-white flex items-center justify-center gap-2 py-3.5 text-xs uppercase tracking-widest min-h-[48px]"
+          className={`w-full bg-[#25D366] text-white flex items-center justify-center gap-2 py-3.5 text-xs uppercase tracking-widest min-h-[48px] ${FOCUS_RING}`}
           style={BODY_FONT}
         >
           <MessageCircle size={15} aria-hidden="true" />
@@ -1023,8 +1072,9 @@ function StickyMobileBar({
   return (
     <MobileBarWrapper isGrid>
       <button
+        type="button"
         onClick={handleAddToCart}
-        className={`flex items-center justify-center gap-1.5 py-3 text-xs uppercase tracking-wider transition-colors cursor-pointer min-h-[48px] ${
+        className={`flex items-center justify-center gap-1.5 py-3 text-xs uppercase tracking-wider transition-colors cursor-pointer min-h-[48px] ${FOCUS_RING} ${
           addedToCart ? "bg-[#C9A96E] text-white" : "bg-foreground text-background"
         }`}
         style={BODY_FONT}
@@ -1045,7 +1095,7 @@ function StickyMobileBar({
         href={waHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-[#25D366] text-white flex items-center justify-center gap-1.5 py-3 text-xs uppercase tracking-wider min-h-[48px]"
+        className={`bg-[#25D366] text-white flex items-center justify-center gap-1.5 py-3 text-xs uppercase tracking-wider min-h-[48px] ${FOCUS_RING}`}
         style={BODY_FONT}
       >
         <MessageCircle size={13} aria-hidden="true" /> WhatsApp
@@ -1322,26 +1372,49 @@ function openSizeGuideWithError({
   setSizeError,
   sizeGuideRef,
   sizeSectionRef,
+  timeoutRef,
 }: {
   setSizeGuideOpen: Dispatch<SetStateAction<boolean>>;
   setSizeError: Dispatch<SetStateAction<boolean>>;
-  sizeGuideRef: RefObject<HTMLDivElement | null>;
-  sizeSectionRef: RefObject<HTMLDivElement | null>;
+  sizeGuideRef: DivRef;
+  sizeSectionRef: DivRef;
+  timeoutRef: TimeoutRef;
 }) {
   setSizeGuideOpen(true);
   setSizeError(true);
 
-  window.setTimeout(() => {
+  window.requestAnimationFrame(() => {
     const target = sizeGuideRef.current ?? sizeSectionRef.current;
     target?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 0);
+  });
 
-  window.setTimeout(() => setSizeError(false), 2500);
+  // Cancel any previously scheduled "hide the error" timer so a second
+  // click before the first one fires can't cause the message to vanish
+  // early (it would otherwise resolve on the *first* click's 2.5s clock).
+  if (timeoutRef.current) {
+    window.clearTimeout(timeoutRef.current);
+  }
+
+  timeoutRef.current = window.setTimeout(() => {
+    setSizeError(false);
+    timeoutRef.current = null;
+  }, SIZE_ERROR_TIMEOUT_MS);
 }
 
 function showAddedToCartMessage(
   setAddedToCart: Dispatch<SetStateAction<boolean>>,
+  timeoutRef: TimeoutRef,
 ) {
   setAddedToCart(true);
-  window.setTimeout(() => setAddedToCart(false), 2500);
+
+  // Same reasoning as above: clear any pending "hide" timer from a
+  // previous click before scheduling a new one.
+  if (timeoutRef.current) {
+    window.clearTimeout(timeoutRef.current);
+  }
+
+  timeoutRef.current = window.setTimeout(() => {
+    setAddedToCart(false);
+    timeoutRef.current = null;
+  }, ADDED_TO_CART_TIMEOUT_MS);
 }

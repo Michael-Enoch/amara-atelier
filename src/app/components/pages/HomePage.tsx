@@ -70,6 +70,8 @@ const PROCESS_STEPS = [
   { num: "04", title: "Delivery", desc: "Your finished piece is packaged with care and delivered directly to you." },
 ];
 
+const STAR_KEYS = ["star-1", "star-2", "star-3", "star-4", "star-5"] as const;
+
 export function HomePage() {
   const navigate = useNavigate();
   const rtw = getReadyToWearBestSellers(4);
@@ -115,6 +117,7 @@ export function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center w-full sm:w-auto">
                 <button
+                  type="button"
                   onClick={() => navigate("/shop")}
                   className="w-full sm:w-auto bg-[#FAF8F5] text-[#1C1C1C] text-xs uppercase tracking-widest px-8 py-4 hover:bg-[#C9A96E] hover:text-white transition-all duration-300 cursor-pointer min-h-[52px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                   style={{ fontFamily: "var(--font-body)" }}
@@ -156,6 +159,7 @@ export function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-3">
           {COLLECTION_PILLARS.map((p, i) => (
             <motion.button
+              type="button"
               key={p.key}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -284,7 +288,7 @@ export function HomePage() {
             </p>
 
             {/* Bridal stats strip */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-8 border-l-2 border-[#C9A96E] pl-4" aria-label="Bridal highlights">
+            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-8 border-l-2 border-[#C9A96E] pl-4" role="group" aria-label="Bridal highlights">
               {[
                 { num: "Handcrafted", label: "Every Gown" },
                 { num: "6–10", label: "Weeks Made" },
@@ -303,6 +307,7 @@ export function HomePage() {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button
+                type="button"
                 onClick={() => navigate("/shop/Bridals")}
                 className="w-full sm:w-auto bg-[#FAF8F5] md:bg-[#1C1C1C] text-[#1C1C1C] md:text-[#FAF8F5] text-xs uppercase tracking-widest px-8 py-4 hover:bg-[#C9A96E] hover:text-white transition-all duration-300 cursor-pointer min-h-[52px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                 style={{ fontFamily: "var(--font-body)" }}
@@ -336,6 +341,7 @@ export function HomePage() {
               </h2>
             </div>
             <button
+              type="button"
               onClick={() => navigate("/shop/Ready-to-Wear")}
               className="hidden md:flex items-center gap-1.5 text-sm text-foreground hover:text-[#C9A96E] transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
               style={{ fontFamily: "var(--font-body)" }}
@@ -360,6 +366,7 @@ export function HomePage() {
           )}
           <div className="mt-8 text-center md:hidden">
             <button
+              type="button"
               onClick={() => navigate("/shop/Ready-to-Wear")}
               className="text-sm text-foreground underline underline-offset-4 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
               style={{ fontFamily: "var(--font-body)" }}
@@ -415,6 +422,7 @@ export function HomePage() {
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
+                type="button"
                 onClick={() => navigate("/about")}
                 className="flex items-center justify-center gap-2 border border-[#2A2A2A] text-[#FAF8F5] text-xs uppercase tracking-widest px-6 py-3.5 hover:border-[#C9A96E] hover:text-[#C9A96E] transition-all cursor-pointer min-h-[48px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                 style={{ fontFamily: "var(--font-body)" }}
@@ -497,9 +505,9 @@ export function HomePage() {
                 className="bg-[#242424] p-7 space-y-5 border border-[#2E2E2E]"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex gap-0.5" aria-label={`${t.rating} out of 5 stars`}>
-                    {Array.from({ length: t.rating }).map((_, si) => (
-                      <Star key={si} size={13} className="fill-[#C9A96E] text-[#C9A96E]" aria-hidden="true" />
+                  <div className="flex gap-0.5" role="img" aria-label={`${t.rating} out of 5 stars`}>
+                    {STAR_KEYS.slice(0, t.rating).map((starKey) => (
+                      <Star key={starKey} size={13} className="fill-[#C9A96E] text-[#C9A96E]" aria-hidden="true" />
                     ))}
                   </div>
                   <span
@@ -549,7 +557,7 @@ export function HomePage() {
         <div className="grid grid-cols-3 md:grid-cols-6 gap-1 md:gap-1.5">
           {HOME_MEDIA.instagram.map((img, i) => (
             <motion.a
-              key={i}
+              key={img.src}
               href={BUSINESS.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -602,6 +610,7 @@ export function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 pt-2">
               <button
+                type="button"
                 onClick={() => navigate("/shop")}
                 className="bg-[#1C1C1C] text-[#FAF8F5] text-xs uppercase tracking-widest px-8 py-4 hover:bg-[#C9A96E] transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 min-h-[52px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                 style={{ fontFamily: "var(--font-body)" }}

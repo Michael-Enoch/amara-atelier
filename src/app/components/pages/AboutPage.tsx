@@ -1,5 +1,13 @@
 import { motion } from "motion/react";
-import { Award, Scissors, Users, BookOpen, MessageCircle, Instagram, CheckCircle } from "lucide-react";
+import {
+  Award,
+  Scissors,
+  Users,
+  BookOpen,
+  MessageCircle,
+  Instagram,
+  CheckCircle,
+} from "lucide-react";
 import { useNavigate } from "react-router";
 import { BUSINESS, WA } from "../../config";
 import { ABOUT_MEDIA } from "../../data/media";
@@ -9,48 +17,87 @@ export function AboutPage() {
   const navigate = useNavigate();
   const values = [
     {
-      icon: <Award size={26} />,
+      icon: <Award size={26} aria-hidden="true" />,
       title: "Craftsmanship",
       desc: "Every stitch is intentional. We don't mass-produce — we construct. Each piece is built from scratch with precision, care, and pride.",
     },
     {
-      icon: <Scissors size={26} />,
+      icon: <Scissors size={26} aria-hidden="true" />,
       title: "Bespoke First",
       desc: "We believe clothes should fit the woman — not the other way around. Every custom order starts with a conversation about you.",
     },
     {
-      icon: <Users size={26} />,
+      icon: <Users size={26} aria-hidden="true" />,
       title: "Community",
       desc: "Amara Atelier is a creative community — clients, students, and collaborators who believe in the power of fashion to transform lives.",
     },
     {
-      icon: <BookOpen size={26} />,
+      icon: <BookOpen size={26} aria-hidden="true" />,
       title: "Education",
       desc: "Knowledge should be shared. Through our fashion classes, we're building the next generation of Nigerian fashion designers.",
     },
   ];
 
   const courseItems = [
-    { title: "Sewing Fundamentals", level: "Beginner", duration: "4 weeks", icon: "✂️" },
-    { title: "Pattern Drafting & Cutting", level: "Intermediate", duration: "6 weeks", icon: "📐" },
-    { title: "Garment Construction", level: "Intermediate", duration: "8 weeks", icon: "🧵" },
-    { title: "Bridal & Formal Wear", level: "Advanced", duration: "10 weeks", icon: "👗" },
-    { title: "Fashion Business & Branding", level: "All levels", duration: "3 weeks", icon: "💼" },
-    { title: "1-on-1 Mentorship", level: "All levels", duration: "Flexible", icon: "🎯" },
+    {
+      title: "Sewing Fundamentals",
+      level: "Beginner",
+      duration: "4 weeks",
+      icon: "✂️",
+    },
+    {
+      title: "Pattern Drafting & Cutting",
+      level: "Intermediate",
+      duration: "6 weeks",
+      icon: "📐",
+    },
+    {
+      title: "Garment Construction",
+      level: "Intermediate",
+      duration: "8 weeks",
+      icon: "🧵",
+    },
+    {
+      title: "Bridal & Formal Wear",
+      level: "Advanced",
+      duration: "10 weeks",
+      icon: "👗",
+    },
+    {
+      title: "Fashion Business & Branding",
+      level: "All levels",
+      duration: "3 weeks",
+      icon: "💼",
+    },
+    {
+      title: "1-on-1 Mentorship",
+      level: "All levels",
+      duration: "Flexible",
+      icon: "🎯",
+    },
   ];
 
   return (
     <div className="bg-background min-h-screen pt-16 md:pt-20">
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ height: "60svh", minHeight: "380px" }}>
+      <section
+        className="relative overflow-hidden"
+        style={{ height: "60svh", minHeight: "380px" }}
+      >
         <img
-          src={imageUrl(ABOUT_MEDIA.hero.src, "w=1800&h=1000&fit=crop&auto=format")}
+          src={imageUrl(
+            ABOUT_MEDIA.hero.src,
+            "w=1800&h=1000&fit=crop&auto=format",
+          )}
           alt={ABOUT_MEDIA.hero.alt}
           className="w-full h-full object-cover object-top"
           decoding="async"
           onError={handleImageError}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1C1C1C]/75 via-[#1C1C1C]/40 to-transparent" />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-[#1C1C1C]/75 via-[#1C1C1C]/40 to-transparent"
+          aria-hidden="true"
+        />
         <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
@@ -74,7 +121,9 @@ export function AboutPage() {
               style={{ fontFamily: "var(--font-body)" }}
               className="text-[#FAFAF8]/75 text-sm md:text-base leading-relaxed"
             >
-              Port Harcourt's leading luxury womenswear designer — crafting bridal gowns, bespoke pieces, and training the next generation of fashion designers.
+              Port Harcourt's leading luxury womenswear designer — crafting
+              bridal gowns, bespoke pieces, and training the next generation of
+              fashion designers.
             </p>
           </motion.div>
         </div>
@@ -90,7 +139,10 @@ export function AboutPage() {
             className="space-y-6"
           >
             <p
-              style={{ fontFamily: "var(--font-body)", letterSpacing: "0.25em" }}
+              style={{
+                fontFamily: "var(--font-body)",
+                letterSpacing: "0.25em",
+              }}
               className="text-[#C9A96E] text-xs uppercase"
             >
               The Designer
@@ -106,21 +158,39 @@ export function AboutPage() {
               className="text-muted-foreground text-sm leading-relaxed space-y-4"
             >
               <p>
-                Amara Atelier is Port Harcourt's foremost luxury womenswear studio — a creative force behind bridal gowns, bespoke commissions, and ready-to-wear pieces that dress women across Nigeria for their most important moments.
+                Amara Atelier is Port Harcourt's foremost luxury womenswear
+                studio — a creative force behind bridal gowns, bespoke
+                commissions, and ready-to-wear pieces that dress women across
+                Nigeria for their most important moments.
               </p>
               <p>
-                With deep expertise in pattern-making, garment construction, and couture finishing, every piece that leaves the atelier is a reflection of the woman who commissioned it — her silhouette, her occasion, her vision.
+                With deep expertise in pattern-making, garment construction, and
+                couture finishing, every piece that leaves the atelier is a
+                reflection of the woman who commissioned it — her silhouette,
+                her occasion, her vision.
               </p>
               <p>
-                Beyond design, Amara Atelier is committed to education — running fashion classes and mentorship programs in Port Harcourt to grow the local fashion industry and equip the next generation of Nigerian designers with real skills.
+                Beyond design, Amara Atelier is committed to education — running
+                fashion classes and mentorship programs in Port Harcourt to grow
+                the local fashion industry and equip the next generation of
+                Nigerian designers with real skills.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              {["Bridal Couture", "Bespoke Design", "Pattern Making", "Fashion Education", "Ready-to-Wear"].map((tag) => (
+              {[
+                "Bridal Couture",
+                "Bespoke Design",
+                "Pattern Making",
+                "Fashion Education",
+                "Ready-to-Wear",
+              ].map((tag) => (
                 <span
                   key={tag}
-                  style={{ fontFamily: "var(--font-body)", letterSpacing: "0.1em" }}
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    letterSpacing: "0.1em",
+                  }}
                   className="text-[10px] uppercase border border-border text-muted-foreground px-3 py-1.5"
                 >
                   {tag}
@@ -141,11 +211,17 @@ export function AboutPage() {
             </div>
 
             <div className="pt-1">
-              <p style={{ fontFamily: "var(--font-display)" }} className="text-foreground text-xl">
+              <p
+                style={{ fontFamily: "var(--font-display)" }}
+                className="text-foreground text-xl"
+              >
                 Amara Atelier
               </p>
               <p
-                style={{ fontFamily: "var(--font-body)", letterSpacing: "0.15em" }}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  letterSpacing: "0.15em",
+                }}
                 className="text-muted-foreground text-xs uppercase mt-0.5"
               >
                 Founder, Designer & Fashion Educator · Port Harcourt
@@ -161,7 +237,10 @@ export function AboutPage() {
           >
             <div className="aspect-[4/5] overflow-hidden bg-[#E8E4DE]">
               <img
-                src={imageUrl(ABOUT_MEDIA.designer.src, "w=800&h=1000&fit=crop&auto=format")}
+                src={imageUrl(
+                  ABOUT_MEDIA.designer.src,
+                  "w=800&h=1000&fit=crop&auto=format",
+                )}
                 alt={ABOUT_MEDIA.designer.alt}
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -171,8 +250,16 @@ export function AboutPage() {
             </div>
             {/* Floating stat card */}
             <div className="absolute -bottom-4 -left-4 md:-left-8 bg-[#1C1C1C] text-[#FAFAF8] p-5 w-44">
-              <p style={{ fontFamily: "var(--font-display)" }} className="text-3xl text-[#C9A96E]">PHC</p>
-              <p style={{ fontFamily: "var(--font-body)" }} className="text-xs text-[#7A7570] uppercase tracking-widest mt-1">
+              <p
+                style={{ fontFamily: "var(--font-display)" }}
+                className="text-3xl text-[#C9A96E]"
+              >
+                PHC
+              </p>
+              <p
+                style={{ fontFamily: "var(--font-body)" }}
+                className="text-xs text-[#7A7570] uppercase tracking-widest mt-1"
+              >
                 Luxury Designer
               </p>
             </div>
@@ -198,10 +285,16 @@ export function AboutPage() {
                 transition={{ delay: i * 0.08 }}
                 className="text-center md:px-8"
               >
-                <p style={{ fontFamily: "var(--font-display)" }} className="text-[#FAFAF8] text-3xl md:text-4xl">
+                <p
+                  style={{ fontFamily: "var(--font-display)" }}
+                  className="text-[#FAFAF8] text-3xl md:text-4xl"
+                >
                   {s.num}
                 </p>
-                <p style={{ fontFamily: "var(--font-body)" }} className="text-[#7A7570] text-xs uppercase tracking-widest mt-1">
+                <p
+                  style={{ fontFamily: "var(--font-body)" }}
+                  className="text-[#7A7570] text-xs uppercase tracking-widest mt-1"
+                >
                   {s.label}
                 </p>
               </motion.div>
@@ -222,7 +315,10 @@ export function AboutPage() {
               className="space-y-6 md:sticky md:top-28 self-start"
             >
               <p
-                style={{ fontFamily: "var(--font-body)", letterSpacing: "0.25em" }}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  letterSpacing: "0.25em",
+                }}
                 className="text-[#C9A96E] text-xs uppercase"
               >
                 Fashion Tutor
@@ -237,13 +333,19 @@ export function AboutPage() {
                 style={{ fontFamily: "var(--font-body)" }}
                 className="text-muted-foreground text-sm leading-relaxed"
               >
-                Whether you're a complete beginner picking up a needle for the first time, or an intermediate seamstress ready to level up — our hands-on classes in Port Harcourt will take you from raw fabric to finished garment.
+                Whether you're a complete beginner picking up a needle for the
+                first time, or an intermediate seamstress ready to level up —
+                our hands-on classes in Port Harcourt will take you from raw
+                fabric to finished garment.
               </p>
               <p
                 style={{ fontFamily: "var(--font-body)" }}
                 className="text-muted-foreground text-sm leading-relaxed"
               >
-                Classes are kept small and intimate — you get personal attention, industry-standard techniques, and direct mentorship from our lead designer. Online options are available for students outside Port Harcourt.
+                Classes are kept small and intimate — you get personal
+                attention, industry-standard techniques, and direct mentorship
+                from our lead designer. Online options are available for
+                students outside Port Harcourt.
               </p>
 
               <div className="space-y-2">
@@ -255,8 +357,15 @@ export function AboutPage() {
                   "Flexible scheduling",
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2.5">
-                    <CheckCircle size={14} className="text-[#C9A96E] flex-shrink-0" />
-                    <span style={{ fontFamily: "var(--font-body)" }} className="text-sm text-foreground">
+                    <CheckCircle
+                      size={14}
+                      className="text-[#C9A96E] flex-shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span
+                      style={{ fontFamily: "var(--font-body)" }}
+                      className="text-sm text-foreground"
+                    >
                       {item}
                     </span>
                   </div>
@@ -270,7 +379,8 @@ export function AboutPage() {
                 className="inline-flex items-center gap-2 bg-[#25D366] text-white text-xs uppercase tracking-widest px-7 py-3.5 hover:bg-[#1ebe57] transition-colors"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                <MessageCircle size={15} /> Enquire About Classes
+                <MessageCircle size={15} aria-hidden="true" /> Enquire About
+                Classes
               </a>
             </motion.div>
 
@@ -285,7 +395,9 @@ export function AboutPage() {
                   transition={{ delay: i * 0.07 }}
                   className="bg-white border border-border p-5 space-y-3 hover:border-[#C9A96E] transition-colors group"
                 >
-                  <span className="text-2xl">{course.icon}</span>
+                  <span className="text-2xl" aria-hidden="true">
+                    {course.icon}
+                  </span>
                   <div>
                     <h3
                       style={{ fontFamily: "var(--font-display)" }}
@@ -293,7 +405,10 @@ export function AboutPage() {
                     >
                       {course.title}
                     </h3>
-                    <p style={{ fontFamily: "var(--font-body)" }} className="text-xs text-muted-foreground mt-1">
+                    <p
+                      style={{ fontFamily: "var(--font-body)" }}
+                      className="text-xs text-muted-foreground mt-1"
+                    >
                       {course.level} · {course.duration}
                     </p>
                   </div>
@@ -301,7 +416,10 @@ export function AboutPage() {
                     href={WA.academy()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ fontFamily: "var(--font-body)", letterSpacing: "0.1em" }}
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      letterSpacing: "0.1em",
+                    }}
                     className="text-[10px] uppercase text-[#C9A96E] hover:underline underline-offset-2"
                   >
                     Enquire →
@@ -327,7 +445,10 @@ export function AboutPage() {
           >
             What We Stand For
           </p>
-          <h2 style={{ fontFamily: "var(--font-display)" }} className="text-foreground text-3xl md:text-5xl">
+          <h2
+            style={{ fontFamily: "var(--font-display)" }}
+            className="text-foreground text-3xl md:text-5xl"
+          >
             The Amara Principles
           </h2>
         </motion.div>
@@ -346,10 +467,16 @@ export function AboutPage() {
                 {v.icon}
               </div>
               <div className="space-y-2">
-                <h3 style={{ fontFamily: "var(--font-display)" }} className="text-foreground text-xl">
+                <h3
+                  style={{ fontFamily: "var(--font-display)" }}
+                  className="text-foreground text-xl"
+                >
                   {v.title}
                 </h3>
-                <p style={{ fontFamily: "var(--font-body)" }} className="text-muted-foreground text-sm leading-relaxed">
+                <p
+                  style={{ fontFamily: "var(--font-body)" }}
+                  className="text-muted-foreground text-sm leading-relaxed"
+                >
                   {v.desc}
                 </p>
               </div>
@@ -361,8 +488,8 @@ export function AboutPage() {
       {/* ── LIFESTYLE GRID ──────────────────────────────────────────────────── */}
       <section>
         <div className="grid grid-cols-2 md:grid-cols-4 h-56 md:h-80">
-          {ABOUT_MEDIA.lifestyle.map((img, i) => (
-            <div key={i} className="overflow-hidden bg-[#F0EDE8]">
+          {ABOUT_MEDIA.lifestyle.map((img) => (
+            <div key={img.src} className="overflow-hidden bg-[#F0EDE8]">
               <img
                 src={imageUrl(img.src, "w=600&h=600&fit=crop&auto=format")}
                 alt={img.alt}
@@ -385,11 +512,18 @@ export function AboutPage() {
           >
             Work With Us
           </p>
-          <h2 style={{ fontFamily: "var(--font-display)" }} className="text-[#FAFAF8] text-3xl md:text-4xl">
+          <h2
+            style={{ fontFamily: "var(--font-display)" }}
+            className="text-[#FAFAF8] text-3xl md:text-4xl"
+          >
             Ready to Create Something Beautiful?
           </h2>
-          <p style={{ fontFamily: "var(--font-body)" }} className="text-[#7A7570] text-sm">
-            Commission a bridal gown, a bespoke piece, or enrol in our fashion classes. Let's talk.
+          <p
+            style={{ fontFamily: "var(--font-body)" }}
+            className="text-[#7A7570] text-sm"
+          >
+            Commission a bridal gown, a bespoke piece, or enrol in our fashion
+            classes. Let's talk.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
             <a
@@ -399,7 +533,7 @@ export function AboutPage() {
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white text-xs uppercase tracking-widest px-7 py-3.5 hover:bg-[#1ebe57] transition-colors"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              <MessageCircle size={15} /> Chat on WhatsApp
+              <MessageCircle size={15} aria-hidden="true" /> Chat on WhatsApp
             </a>
             <a
               href={BUSINESS.instagramUrl}
@@ -408,7 +542,7 @@ export function AboutPage() {
               className="inline-flex items-center justify-center gap-2 border border-[#2A2A2A] text-[#9A9690] text-xs uppercase tracking-widest px-7 py-3.5 hover:border-[#C9A96E] hover:text-[#C9A96E] transition-colors"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              <Instagram size={15} /> Follow on Instagram
+              <Instagram size={15} aria-hidden="true" /> Follow on Instagram
             </a>
           </div>
         </div>

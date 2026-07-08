@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { products } from "../data/products";
 import type { Product } from "../data/types";
 
@@ -39,10 +40,12 @@ function isValidSize(value: unknown): value is string {
 }
 
 function readStorage(key: string, legacyKey?: string): unknown {
-  if (typeof localStorage === "undefined") return null;
+  if (typeof globalThis.localStorage === "undefined") return null;
 
   try {
-    const raw = localStorage.getItem(key) ?? (legacyKey ? localStorage.getItem(legacyKey) : null);
+    const raw =
+      globalThis.localStorage.getItem(key) ??
+      (legacyKey ? globalThis.localStorage.getItem(legacyKey) : null);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
@@ -50,8 +53,10 @@ function readStorage(key: string, legacyKey?: string): unknown {
 }
 
 function writeStorage(key: string, value: unknown) {
+  if (typeof globalThis.localStorage === "undefined") return;
+
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    globalThis.localStorage.setItem(key, JSON.stringify(value));
   } catch {
     // Ignore storage write failures so shopping flows continue in-memory.
   }
@@ -157,24 +162,41 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     [wishlist]
   );
 
-  const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
-  const cartTotal = cart.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  const cartCount = useMemo(() => cart.reduce((sum, i) => sum + i.quantity, 0), [cart]);
+  const cartTotal = useMemo(
+    () => cart.reduce((sum, i) => sum + i.product.price * i.quantity, 0),
+    [cart]
+  );
+
+  const value = useMemo<ShopContextValue>(
+    () => ({
+      cart,
+      wishlist,
+      addToCart,
+      removeFromCart,
+      updateQty,
+      clearCart,
+      toggleWishlist,
+      isWishlisted,
+      cartCount,
+      cartTotal,
+    }),
+    [
+      addToCart,
+      cart,
+      cartCount,
+      cartTotal,
+      clearCart,
+      isWishlisted,
+      removeFromCart,
+      toggleWishlist,
+      updateQty,
+      wishlist,
+    ]
+  );
 
   return (
-    <ShopContext.Provider
-      value={{
-        cart,
-        wishlist,
-        addToCart,
-        removeFromCart,
-        updateQty,
-        clearCart,
-        toggleWishlist,
-        isWishlisted,
-        cartCount,
-        cartTotal,
-      }}
-    >
+    <ShopContext.Provider value={value}>
       {children}
     </ShopContext.Provider>
   );

@@ -47,7 +47,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] bg-[#1C1C1C]/40 backdrop-blur-sm"
+            className="fixed inset-0 z-60 bg-[#1C1C1C]/40 backdrop-blur-sm"
             onClick={onClose}
             aria-hidden="true"
           />
@@ -61,16 +61,16 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
             role="dialog"
             aria-modal="true"
             aria-label={activeTab === "cart" ? "Shopping cart" : "Saved items"}
-            className="fixed top-0 right-0 bottom-0 z-[70] w-full max-w-sm bg-[#FAF8F5] flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 bottom-0 z-70 w-full max-w-sm bg-[#FAF8F5] flex flex-col shadow-2xl"
           >
             {/* ── Header ── */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-border flex-shrink-0">
-              <div className="flex gap-1" role="tablist">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
+              <div className="flex gap-1" role="group" aria-label="Drawer section">
                 {(["cart", "wishlist"] as const).map((tab) => (
                   <button
+                    type="button"
                     key={tab}
-                    role="tab"
-                    aria-selected={activeTab === tab}
+                    aria-pressed={activeTab === tab}
                     onClick={() => setActiveTab(tab)}
                     className={`text-xs uppercase tracking-widest px-3 py-1.5 transition-colors cursor-pointer ${
                       activeTab === tab
@@ -86,16 +86,17 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                 ))}
               </div>
               <button
+                type="button"
                 onClick={onClose}
                 aria-label="Close drawer"
-                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 -mr-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 -mr-1 min-w-11 min-h-11 flex items-center justify-center"
               >
                 <X size={20} aria-hidden="true" />
               </button>
             </div>
 
             {/* ── Body ── */}
-            <div className="flex-1 overflow-y-auto" role="tabpanel">
+            <div className="flex-1 overflow-y-auto">
               {activeTab === "cart" ? (
                 cart.length === 0 ? (
                   /* Empty cart */
@@ -108,6 +109,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                       Browse our collections and add pieces you love.
                     </p>
                     <button
+                      type="button"
                       onClick={goToShop}
                       className="mt-2 bg-foreground text-background text-xs uppercase tracking-widest px-6 py-3 cursor-pointer hover:bg-[#C9A96E] transition-colors min-h-[44px]"
                       style={{ fontFamily: "var(--font-body)" }}
@@ -121,6 +123,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                     {cart.map((item) => (
                       <div key={`${item.product.id}-${item.size}`} className="flex gap-3 p-4">
                         <button
+                          type="button"
                           onClick={() => goToProduct(item.product.id)}
                           className="w-16 h-20 flex-shrink-0 overflow-hidden bg-[#F0EDE8] cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                           aria-label={`View ${item.product.name}`}
@@ -146,21 +149,23 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                           </p>
                           <div className="flex items-center gap-2 pt-1">
                             <button
+                              type="button"
                               onClick={() => updateQty(item.product.id, item.size, -1)}
                               aria-label="Decrease quantity"
                               className="w-8 h-8 border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
                             >
                               <Minus size={12} aria-hidden="true" />
                             </button>
-                            <span
+                            <output
                               style={{ fontFamily: "var(--font-body)" }}
                               className="text-sm w-5 text-center"
                               aria-live="polite"
                               aria-label={`Quantity: ${item.quantity}`}
                             >
                               {item.quantity}
-                            </span>
+                            </output>
                             <button
+                              type="button"
                               onClick={() => updateQty(item.product.id, item.size, 1)}
                               aria-label="Increase quantity"
                               className="w-8 h-8 border border-border flex items-center justify-center hover:border-foreground transition-colors cursor-pointer"
@@ -168,6 +173,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                               <Plus size={12} aria-hidden="true" />
                             </button>
                             <button
+                              type="button"
                               onClick={() => removeFromCart(item.product.id, item.size)}
                               aria-label={`Remove ${item.product.name} from cart`}
                               className="ml-auto text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-1"
@@ -197,6 +203,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                     {wishlist.map((product) => (
                       <div key={product.id} className="relative group">
                         <button
+                          type="button"
                           onClick={() => goToProduct(product.id)}
                           className="w-full cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                           aria-label={`View ${product.name}`}
@@ -219,6 +226,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                           </p>
                         </button>
                         <button
+                          type="button"
                           onClick={() => toggleWishlist(product)}
                           aria-label={`Remove ${product.name} from saved items`}
                           className="absolute top-2 right-2 w-8 h-8 bg-white/80 flex items-center justify-center text-muted-foreground hover:text-foreground cursor-pointer hover:bg-white transition-colors"
@@ -256,6 +264,7 @@ export function CartDrawer({ open, onClose, defaultTab = "cart" }: CartDrawerPro
                   <MessageCircle size={17} aria-hidden="true" /> Order via WhatsApp
                 </a>
                 <button
+                  type="button"
                   onClick={clearCart}
                   className="w-full text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer text-center py-2 min-h-[36px]"
                   style={{ fontFamily: "var(--font-body)" }}

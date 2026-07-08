@@ -18,6 +18,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const focusTimeoutRef = useRef<number | null>(null);
 
   const results: Product[] =
     query.trim().length < 1
@@ -27,19 +28,35 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const trending = getBestSellers(4);
 
   useEffect(() => {
-    if (open) {
-      setQuery("");
-      setTimeout(() => inputRef.current?.focus(), 80);
+    if (!open) return undefined;
+
+    setQuery("");
+    if (focusTimeoutRef.current) {
+      window.clearTimeout(focusTimeoutRef.current);
     }
+
+    focusTimeoutRef.current = window.setTimeout(() => {
+      inputRef.current?.focus();
+      focusTimeoutRef.current = null;
+    }, 80);
+
+    return () => {
+      if (focusTimeoutRef.current) {
+        window.clearTimeout(focusTimeoutRef.current);
+        focusTimeoutRef.current = null;
+      }
+    };
   }, [open]);
 
   useEffect(() => {
+    if (!open) return undefined;
+
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [onClose]);
+  }, [onClose, open]);
 
   const handleSelect = (id: number) => {
     navigate(`/product/${id}`);
@@ -92,6 +109,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                 />
                 {query && (
                   <button
+                    type="button"
                     onClick={() => setQuery("")}
                     aria-label="Clear search"
                     className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 min-w-[36px] min-h-[36px] flex items-center justify-center"
@@ -100,6 +118,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   </button>
                 )}
                 <button
+                  type="button"
                   onClick={onClose}
                   aria-label="Close search"
                   className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer p-2 ml-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -129,6 +148,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                       {results.map((p) => (
                         <li key={p.id}>
                           <button
+                            type="button"
                             onClick={() => handleSelect(p.id)}
                             className="w-full flex items-center gap-4 p-3 hover:bg-[#F5F3EF] transition-colors group cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
                           >
@@ -178,6 +198,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {trending.map((p) => (
                       <button
+                        type="button"
                         key={p.id}
                         onClick={() => handleSelect(p.id)}
                         className="group text-left cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
@@ -211,6 +232,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                     <div className="flex flex-wrap gap-2">
                       {QUICK_FILTERS.map((cat) => (
                         <button
+                          type="button"
                           key={cat}
                           onClick={() => setQuery(cat)}
                           className="text-xs px-3 py-1.5 border border-border text-muted-foreground hover:border-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] min-h-[36px]"

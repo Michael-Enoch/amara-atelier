@@ -10,6 +10,12 @@ const NAV_LINKS = [
   { label: "About Us", to: "/about" },
 ] as const;
 
+const BRAND_TAGS = [
+  { label: "BRIDALS", className: "bg-[#C9A96E]/20 text-[#C9A96E]" },
+  { label: "BESPOKE", className: "bg-[#FAF8F5]/10 text-[#FAF8F5]/70" },
+  { label: "RTW", className: "bg-[#2A2A2A] text-[#7A7570]" },
+] as const;
+
 export function Footer() {
   const navigate = useNavigate();
 
@@ -50,19 +56,13 @@ export function Footer() {
             </p>
 
             <div className="flex items-center gap-1 flex-wrap">
-              {["BRIDALS", "BESPOKE", "RTW"].map((tag, i) => (
+              {BRAND_TAGS.map((tag) => (
                 <span
-                  key={tag}
+                  key={tag.label}
                   style={{ fontFamily: "var(--font-body)", letterSpacing: "0.15em" }}
-                  className={`text-[10px] px-2.5 py-1 ${
-                    i === 0
-                      ? "bg-[#C9A96E]/20 text-[#C9A96E]"
-                      : i === 1
-                      ? "bg-[#FAF8F5]/10 text-[#FAF8F5]/70"
-                      : "bg-[#2A2A2A] text-[#7A7570]"
-                  }`}
+                  className={`text-[10px] px-2.5 py-1 ${tag.className}`}
                 >
-                  {tag}
+                  {tag.label}
                 </span>
               ))}
             </div>
@@ -102,6 +102,7 @@ export function Footer() {
                 {NAV_LINKS.map((l) => (
                   <li key={l.label}>
                     <button
+                      type="button"
                       onClick={() => navigate(l.to)}
                       className="text-[#7A7570] hover:text-[#FAF8F5] text-sm transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E] focus-visible:outline-offset-2"
                       style={{ fontFamily: "var(--font-body)" }}
