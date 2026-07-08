@@ -57,7 +57,7 @@ export function VideoReelGrid() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.07 }}
-              className="relative group overflow-hidden bg-[#2A2A2A] cursor-pointer aspect-[9/14]"
+              className="relative group overflow-hidden bg-[#2A2A2A] cursor-pointer aspect-9/14"
               onMouseEnter={() => setHoveredId(reel.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -71,7 +71,7 @@ export function VideoReelGrid() {
               />
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1C]/80 via-transparent to-transparent" aria-hidden="true" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#1C1C1C]/80 via-transparent to-transparent" aria-hidden="true" />
 
               {/* Dark hover overlay */}
               <div className={`absolute inset-0 transition-opacity duration-300 bg-[#1C1C1C]/30 ${
