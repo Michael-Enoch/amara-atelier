@@ -30,11 +30,11 @@ function ProductCardComponent({
       className="group cursor-pointer"
     >
       {/* Image container */}
-      <div className="relative overflow-hidden bg-[#F0EDE8] aspect-[3/4]">
+      <div className="relative overflow-hidden bg-[#F0EDE8] aspect-3/4">
         <button
           type="button"
           onClick={() => onViewDetails(product.id)}
-          className="relative block w-full h-full text-left cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+          className="relative block w-full h-full text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
           aria-label={`View details for ${product.name}`}
         >
           {/* Primary image; switches to hoverImage on desktop hover */}
@@ -133,7 +133,7 @@ function ProductCardComponent({
       {/* Text info below image */}
       <button
         type="button"
-        className="block w-full pt-2.5 space-y-0.5 cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
+        className="block w-full pt-2.5 space-y-0.5 cursor-pointer text-left  focus-visible:outline-2 focus-visible:outline-[#C9A96E]"
         onClick={() => onViewDetails(product.id)}
       >
         <p
